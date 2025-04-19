@@ -53,12 +53,13 @@
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                    <a href="index.html" class="btn btn-secondary">Volver</a>
+                </div>
             </form>
-
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.querySelector("form").addEventListener("submit", function (e) {
@@ -91,7 +92,5 @@
                 });
         });
     </script>
-
 </body>
-
 </html>

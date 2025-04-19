@@ -9,9 +9,10 @@ $direccion = $_POST['Direccion'] ?? '';
 $email = $_POST['email'] ?? '';
 $tel = $_POST['tel'] ?? '';
 $password = $_POST['password'] ?? '';
+$password_encriptado = md5($password);
 
 if ($nombre && $documento && $direccion && $email && $tel && $password) {
-    if (registrarUsuario($conexion, $nombre, $documento, $direccion, $email, $tel, $password)) {
+    if (registrarUsuario($conexion, $nombre, $documento, $direccion, $email, $tel, $password_encriptado)) {
         echo "Registro exitoso. <a href='login.php'>Inicia sesión</a>";
     } else {
         echo "Error al registrar usuario.";

@@ -1,0 +1,25 @@
+<?php
+
+include("entorno.php");
+include("modelRegistro.php");
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL); 
+
+$nombre = $_POST['Nombre'] ?? '';
+$documento = $_POST['Documento'] ?? '';
+$direccion = $_POST['Direccion'] ?? '';
+$email = $_POST['email'] ?? '';
+$tel = $_POST['tel'] ?? '';
+$password = $_POST['password'] ?? '';
+
+if ($nombre && $documento && $direccion && $email && $tel && $password) {
+    if (registrarUsuario($conexion, $nombre, $documento, $direccion, $email, $tel, $password)) {
+        echo "Registro exitoso. <a href='login.php'>Inicia sesión</a>";
+    } else {
+        echo "Error al registrar usuario.";
+    }
+} else {
+    echo "Todos los campos son obligatorios.";
+}
+?>

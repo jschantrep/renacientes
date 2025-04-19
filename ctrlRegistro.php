@@ -3,9 +3,6 @@
 include("entorno.php");
 include("modelRegistro.php");
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL); 
-
 $nombre = $_POST['Nombre'] ?? '';
 $documento = $_POST['Documento'] ?? '';
 $direccion = $_POST['Direccion'] ?? '';

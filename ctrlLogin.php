@@ -1,6 +1,6 @@
 <?php
-include("entorno.php");
-include("modeloLogin.php");
+include_once("entorno.php");
+include_once("modeloLogin.php");
 
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';

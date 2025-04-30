@@ -1,10 +1,7 @@
 <?php
 
-include("entorno.php");
-include("modelRegistro.php");
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL); 
+include_once("entorno.php");
+include_once("modelRegistro.php");
 
 $nombre = $_POST['Nombre'] ?? '';
 $documento = $_POST['Documento'] ?? '';

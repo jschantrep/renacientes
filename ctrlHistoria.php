@@ -3,7 +3,7 @@ session_start();
 $id_usuario = $_SESSION['id_usuario'];
 
 
-include("entorno.php");
+include_once("entorno.php");
 
 $fecha = $_POST['fecha'] ?? '';
 $tipo_incidente = $_POST['tipo_incidente'] ?? '';

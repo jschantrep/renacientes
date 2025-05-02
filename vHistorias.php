@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("entorno.php");
+include_once("entorno.php");
 
 $id_usuario = $_SESSION['id_usuario'] ?? null;
 $tipo_usuario = $_SESSION['rol'] ?? 'usuario';

@@ -1,0 +1,8 @@
+# Ignorar archivos de configuración
+config.php
+
+# Ignorar carpetas de dependencias
+/vendor/
+
+# Ignorar archivos de logs
+*.log

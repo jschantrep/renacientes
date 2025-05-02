@@ -1,10 +1,13 @@
 <?php
-$host = "localhost";
-$db = "renacer";
-$user = "root";
-$pass = "admin";
+// Incluir el archivo de configuración
+require_once 'config.php';
 
-$conexion = new mysqli($host, $user, $pass, $db);
+// Establecer la conexión
+$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
+if ($conexion->connect_error) {
+    die("Connection failed: " . $conexion->connect_error);
+}
+echo "Conexión exitosa!";
 ?>
 

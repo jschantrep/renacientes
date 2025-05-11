@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: renacer
 -- ------------------------------------------------------
--- Server version	5.7.44-log
+-- Server version	8.0.42
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,13 +23,17 @@ DROP TABLE IF EXISTS `historias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `historias` (
-  `idHistorias` int(11) NOT NULL,
-  `IdDatos_Basicos` int(11) DEFAULT NULL,
-  `Observacion` varchar(8000) CHARACTER SET utf8 DEFAULT NULL,
+  `idHistorias` int NOT NULL AUTO_INCREMENT,
+  `IdDatos_Basicos` int DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `tipo_incidente` varchar(100) NOT NULL,
+  `descripcion` text NOT NULL,
+  `ubicacion` varchar(255) NOT NULL,
+  `testigos` text,
   PRIMARY KEY (`idHistorias`),
   KEY `IdDatos_Basicos` (`IdDatos_Basicos`),
-  CONSTRAINT `historias_ibfk_1` FOREIGN KEY (`IdDatos_Basicos`) REFERENCES `datos_basicos` (`idDatos_Basicos`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `historias_ibfk_1` FOREIGN KEY (`IdDatos_Basicos`) REFERENCES `datos_basicos` (`idDatos_Basicos`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +42,7 @@ CREATE TABLE `historias` (
 
 LOCK TABLES `historias` WRITE;
 /*!40000 ALTER TABLE `historias` DISABLE KEYS */;
+INSERT INTO `historias` VALUES (1,1,'2025-04-19','robo','saf','asf','as'),(2,3,'2025-04-25','amenaza','dsfsd','sdfsd','sdfsdf'),(3,3,'2025-04-26','agresión','aaaaaaaa','aaaaaaaa','aaaaaaaa'),(4,3,'2025-04-26','agresión','aaaaaaaa','aaaaaaaa','aaaaaaaa'),(5,3,'2025-04-02','agresión','sadas','sadsad','asdsad'),(6,4,'2025-04-19','robo','en la casa','carrera 62 # 2c- 77','no');
 /*!40000 ALTER TABLE `historias` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-29 22:18:32
+-- Dump completed on 2025-05-10 21:13:52

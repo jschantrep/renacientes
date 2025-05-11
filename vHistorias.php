@@ -8,7 +8,7 @@ $tipo_usuario = $_SESSION['rol'] ?? 'usuario';
 if ($tipo_usuario === 'admin') {
     $query = "
         SELECT h.idHistorias, h.fecha, h.tipo_incidente, h.descripcion, h.ubicacion, h.testigos,
-               u.Nombre, u.Documento
+               u.Nombre, u.Documento, h.estado
         FROM historias h
         INNER JOIN datos_basicos u ON h.IdDatos_Basicos = u.idDatos_Basicos
         ORDER BY h.fecha DESC
@@ -16,7 +16,7 @@ if ($tipo_usuario === 'admin') {
 } else {
     $query = "
         SELECT h.idHistorias, h.fecha, h.tipo_incidente, h.descripcion, h.ubicacion, h.testigos,
-               u.Nombre, u.Documento
+               u.Nombre, u.Documento, h.estado
         FROM historias h
         INNER JOIN datos_basicos u ON h.IdDatos_Basicos = u.idDatos_Basicos
         WHERE h.IdDatos_Basicos = $id_usuario
@@ -59,11 +59,14 @@ $resultado = mysqli_query($conexion, $query);
     <div class="container table-container">
         <h2 class="mb-4 text-center">Historias Registradas</h2>
         <div class="d-flex justify-content-between mb-3">
-            <a href="reportExcel.php" class="btn btn-success">Exportar a Excel</a>
+            <a href="reportPdf.php" class="btn btn-success">Exportar a PDF</a>
             <?php if ($tipo_usuario === 'admin'): ?>
                 <a href="logout.php" class="btn btn-danger">Cerrar Sesión</a>
             <?php else: ?>
                 <a href="historia.php" class="btn">Volver</a>
+            <?php endif; ?>
+            <?php if ($tipo_usuario === 'admin'): ?>
+            <a href="dashboard.php" class="btn btn-primary">Ver Dashboard</a>
             <?php endif; ?>
         </div>
         <div class="table-responsive">
@@ -78,6 +81,7 @@ $resultado = mysqli_query($conexion, $query);
                         <th>Descripción</th>
                         <th>Ubicación</th>
                         <th>Testigos</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,6 +95,8 @@ $resultado = mysqli_query($conexion, $query);
                             <td><?php echo htmlspecialchars($fila['descripcion']); ?></td>
                             <td><?php echo htmlspecialchars($fila['ubicacion']); ?></td>
                             <td><?php echo htmlspecialchars($fila['testigos']); ?></td>
+                            <td><?php echo htmlspecialchars($fila['estado']); ?></td>
+
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

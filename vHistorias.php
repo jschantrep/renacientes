@@ -59,35 +59,31 @@ $resultado = mysqli_query($conexion, $query);
 <body>
     <div class="container table-container">
         <h2 class="mb-4 text-center">Historias Registradas</h2>
+        <br>
         <ul class="nav nav-tabs mb-4">
-            <li class="nav-item">
-                <a class="nav-link active" href="historias.php">Historias Registradas</a>
-            </li>
-            <?php if ($tipo_usuario === 'admin'): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="formCalificacion.php">Ver Calificaciones</a>
-                </li>
-            <?php else: ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="formCalificacion.php">Calificar el Servicio</a>
-                </li>
-            <?php endif; ?>
+    <?php if ($tipo_usuario === 'admin'): ?>
+        <li class="nav-item">
+            <a class="nav-link" href="formCalificacion.php">Ver Calificaciones</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="reportPdf.php">Exportar a PDF</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="dashboard.php">Dashboard</a>
+        </li>
+    <?php else: ?>
+        <li class="nav-item">
+            <a class="nav-link" href="formCalificacion.php">Calificar el Servicio</a>
+        </li>
+    <?php endif; ?>
 
-            <?php if ($tipo_usuario === 'admin'): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">Dashboard</a>
-                </li>
-            <?php endif; ?>
-            <li class="nav-item ms-auto">
-                <?php if ($tipo_usuario === 'admin'): ?>
-                    <a class="nav-link text-danger" href="logout.php">Cerrar Sesión</a>
-                <?php else: ?>
-                    <a class="nav-link" href="historia.php">Volver</a>
-                <?php endif; ?>
-            </li>
-        </ul>
-
-
+    <li class="nav-item ms-auto">
+        <a class="nav-link" href="historia.php">Volver</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-danger" href="logout.php">Cerrar Sesión</a>
+    </li>
+</ul>
         <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-dark text-center">

@@ -55,20 +55,39 @@ $resultado = mysqli_query($conexion, $query);
         }
     </style>
 </head>
+
 <body>
     <div class="container table-container">
         <h2 class="mb-4 text-center">Historias Registradas</h2>
-        <div class="d-flex justify-content-between mb-3">
-            <a href="reportPdf.php" class="btn btn-success">Exportar a PDF</a>
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" href="historias.php">Historias Registradas</a>
+            </li>
             <?php if ($tipo_usuario === 'admin'): ?>
-                <a href="logout.php" class="btn btn-danger">Cerrar Sesión</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="formCalificacion.php">Ver Calificaciones</a>
+                </li>
             <?php else: ?>
-                <a href="historia.php" class="btn">Volver</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="formCalificacion.php">Calificar el Servicio</a>
+                </li>
             <?php endif; ?>
+
             <?php if ($tipo_usuario === 'admin'): ?>
-            <a href="dashboard.php" class="btn btn-primary">Ver Dashboard</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
             <?php endif; ?>
-        </div>
+            <li class="nav-item ms-auto">
+                <?php if ($tipo_usuario === 'admin'): ?>
+                    <a class="nav-link text-danger" href="logout.php">Cerrar Sesión</a>
+                <?php else: ?>
+                    <a class="nav-link" href="historia.php">Volver</a>
+                <?php endif; ?>
+            </li>
+        </ul>
+
+
         <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-dark text-center">
@@ -95,7 +114,33 @@ $resultado = mysqli_query($conexion, $query);
                             <td><?php echo htmlspecialchars($fila['descripcion']); ?></td>
                             <td><?php echo htmlspecialchars($fila['ubicacion']); ?></td>
                             <td><?php echo htmlspecialchars($fila['testigos']); ?></td>
-                            <td><?php echo htmlspecialchars($fila['estado']); ?></td>
+                            <td class="text-center">
+                                <?php if ($tipo_usuario === 'admin'): ?>
+                                    <select class="form-select form-select-sm"
+                                        onchange="actualizarEstado(<?php echo $fila['idHistorias']; ?>, this.value)">
+
+                                        <?php
+                                        $estados = ['Pendiente', 'En revisión', 'Cerrado'];
+                                        foreach ($estados as $estado) {
+                                            $selected = $fila['estado'] === $estado ? 'selected' : '';
+                                            echo "<option value=\"$estado\" $selected>$estado</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div id="mensaje-<?php echo $fila['idHistorias']; ?>" class="text-success small mt-1"></div>
+                                <?php else: ?>
+                                    <div>
+                                        <?php echo htmlspecialchars($fila['estado']); ?>
+                                    </div>
+                                    <?php if ($fila['estado'] === 'Cerrado'): ?>
+                                        <div class="alert alert-info mt-2 p-2 mb-0 small">
+                                            Tu novedad ha sido escalada. Pronto recibirás una respuesta.
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </td>
+
+
 
                         </tr>
                     <?php endwhile; ?>
@@ -103,8 +148,44 @@ $resultado = mysqli_query($conexion, $query);
             </table>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function actualizarEstado(id, nuevoEstado) {
+            const formData = new FormData();
+            formData.append('idHistorias', id);
+            formData.append('estado', nuevoEstado);
+
+            fetch('ctrlHistoria.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(resp => resp.text())
+                .then(mensaje => {
+                    const mensajeDiv = document.getElementById('mensaje-' + id);
+                    mensajeDiv.innerText = mensaje;
+                    mensajeDiv.classList.remove('text-danger');
+                    mensajeDiv.classList.add('text-success');
+
+                    setTimeout(() => {
+                        mensajeDiv.innerText = '';
+                    }, 3000);
+                })
+                .catch(error => {
+                    const mensajeDiv = document.getElementById('mensaje-' + id);
+                    mensajeDiv.innerText = "Error al enviar la solicitud.";
+                    mensajeDiv.classList.remove('text-success');
+                    mensajeDiv.classList.add('text-danger');
+
+                    setTimeout(() => {
+                        mensajeDiv.innerText = '';
+                    }, 3000);
+                });
+        }
+    </script>
+
+
+
 </body>
 
 </html>
